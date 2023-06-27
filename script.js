@@ -6,7 +6,6 @@ import {
   SAD,
 } from "./utilities.js";
 
-let hammer;
 let requestId;
 let timeoutId;
 const tetris = new Tetris();
@@ -21,24 +20,17 @@ function initKeydown() {
 }
 
 function onKeydown(event) {
-  switch (event.key) {
-    case "ArrowUp":
-      rotate();
-      break;
-    case "ArrowDown":
-      moveDown();
-      break;
-    case "ArrowLeft":
-      moveLeft();
-      break;
-    case "ArrowRight":
-      moveRight();
-      break;
-    case " ":
-      dropDown();
-      break;
-    default:
-      return;
+  const actions = {
+    "ArrowUp": rotate,
+    "ArrowDown": moveDown,
+    "ArrowLeft": moveLeft,
+    "ArrowRight": moveRight,
+    " ": dropDown,
+  };
+
+  const action = actions[event.key];
+  if (action) {
+    action();
   }
 }
 
