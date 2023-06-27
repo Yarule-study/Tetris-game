@@ -134,7 +134,7 @@ function drawGhostTetromino() {
 
 function gameOver() {
   stopLoop();
-  document.removeEventListener("keydown", onKeydown);
+  gameOverAnimation();
 }
 
 function gameOverAnimation() {
