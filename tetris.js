@@ -93,25 +93,25 @@ export class Tetris {
     for (let row = 0; row < matrixSize; row++) {
       for (let column = 0; column < matrixSize; column++) {
         if (!this.tetromino.matrix[row][column]) continue;
-        if (this.isOutsideOfGameBoard(row, column)) return false;
-        if (this.isCollides(row, column)) return false;
+        if (this.isInvalidPosition(row, column)) return false;
       }
     }
     return true;
   }
 
-  isOutsideOfGameBoard(row, column) {
-    return (
-      this.tetromino.column + column < 0 ||
-      this.tetromino.column + column >= PLAYFIELD_COLUMNS ||
-      this.tetromino.row + row >= this.playfield.length
-    );
-  }
+  isInvalidPosition(row, column) {
+    const { tetromino, playfield } = this;
+    const { row: tetrominoRow, column: tetrominoColumn } = tetromino;
 
-  isCollides(row, column) {
-    return this.playfield[this.tetromino.row + row]?.[
-      this.tetromino.column + column
-    ];
+    if (
+      tetrominoColumn + column < 0 ||
+      tetrominoColumn + column >= PLAYFIELD_COLUMNS ||
+      tetrominoRow + row >= playfield.length
+    ) {
+      return true;
+    }
+
+    return playfield[tetrominoRow + row]?.[tetrominoColumn + column];
   }
 
   placeTetromino() {
